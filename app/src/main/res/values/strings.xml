@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Movie</string>
+
+    <string name="no_view">No View</string>
+    <string name="search">Search</string>
+    <string name="no_internet">No Internet.</string>
+    <string name="loading_cache">Loading from Cache</string>
+    <string name="timeout">Connection timeout</string>
+    <string name="category">Category</string>
+    <string name="duration">Duration</string>
+    <string name="rating">Rating</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="score">Score</string>
+    <string name="review">Review</string>
+    <string name="language">Language</string>
+    <string name="popularity">Popularity</string>
+    <string name="box_office">Box Office</string>
+    <string name="director">Director</string>
+    <string name="writer">Writer</string>
+    <string name="actor">Actor</string>
+</resources>

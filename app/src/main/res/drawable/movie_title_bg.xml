@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/white" />
+    <padding
+        android:bottom="@dimen/_1sdp"
+        android:left="@dimen/_1sdp"
+        android:right="@dimen/_1sdp"
+        android:top="@dimen/_1sdp" />
+    <gradient
+        android:angle="45"
+        android:centerColor="@android:color/darker_gray"
+        android:endColor="@color/movie_title_bg"
+        android:startColor="@android:color/white" />
+</shape>

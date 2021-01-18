@@ -1,0 +1,87 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        applicationId "com.balajiss.movie"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+def androidxLifecycleVersion = "2.2.0"
+def retrofitVersion = "2.2.0"
+def swipeLayoutVersion = "1.0.0"
+def recyclerViewVersion = "1.1.0"
+def picassoVersion = "2.71828"
+def gsonVersion = "2.8.5"
+def httpLoggingInterceptor = "4.9.0"
+def rxJavaVersion = "2.1.1"
+def rxAndroidVersion = "2.1.1"
+def sdpVersion = "1.0.6"
+def coordinatorVersion = "1.1.0"
+def materialVersion = "1.0.0"
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$androidxLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidxLifecycleVersion"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    // SwipeRefreshLayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeLayoutVersion"
+
+    // Recycler View
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+
+    // Picasso
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    // Http Logging Interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$httpLoggingInterceptor"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+
+    //RxAndroid
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+
+    // SDP & SSP
+    implementation "com.intuit.sdp:sdp-android:$sdpVersion"
+    implementation "com.intuit.ssp:ssp-android:$sdpVersion"
+
+    // Coordinator Layout
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorVersion"
+
+    // AppBar Layout
+    implementation "com.google.android.material:material:$materialVersion"
+}
