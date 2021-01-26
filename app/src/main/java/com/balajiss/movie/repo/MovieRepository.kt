@@ -13,9 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class MovieRepository {
-
-    private var movieService: MovieService = MovieRetrofit.getInstance().getService()
+open class MovieRepository constructor(private val movieService: MovieService = MovieRetrofit.getInstance().getService()) {
 
     fun getMovieList(movieSearchRequest: MovieSearchRequest): MutableLiveData<NetworkResponse<MovieSearchResponse>> {
         val movieListLiveData = MutableLiveData<NetworkResponse<MovieSearchResponse>>()

@@ -8,7 +8,7 @@ import com.balajiss.movie.model.search.MovieSearchRequest
 import com.balajiss.movie.repo.MovieRepository
 import com.balajiss.movie.util.Constants
 
-class MovieViewModel() : ViewModel() {
+class MovieViewModel(private val movieRepository: MovieRepository = MovieRepository()) : ViewModel() {
 
     lateinit var selectedMovie: MovieItem
     val searchData = ArrayList<MovieItem>()
@@ -20,7 +20,7 @@ class MovieViewModel() : ViewModel() {
 
     val movieListObservable = Transformations.switchMap(movieSearchRequestObservable) {
         movieSearchRequestObservable.value?.let { movieSearchRequest ->
-            MovieRepository().getMovieList(
+            movieRepository.getMovieList(
                 movieSearchRequest
             )
         }

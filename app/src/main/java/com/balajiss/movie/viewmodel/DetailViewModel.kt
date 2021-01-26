@@ -7,14 +7,15 @@ import com.balajiss.movie.model.display.MovieDisplayRequest
 import com.balajiss.movie.model.search.MovieItem
 import com.balajiss.movie.repo.MovieRepository
 
-class DetailViewModel: ViewModel() {
+class DetailViewModel(private val movieRepository: MovieRepository = MovieRepository()) :
+    ViewModel() {
     lateinit var movieItem: MovieItem
 
     val movieDetailObserver = MutableLiveData<MovieDisplayRequest>()
 
-    val movieDetailObservable = Transformations.switchMap(movieDetailObserver){
-        movieDetailObserver.value?.let {movieDisplayRequest ->
-            MovieRepository().getMovieDetails(movieDisplayRequest)
+    val movieDetailObservable = Transformations.switchMap(movieDetailObserver) {
+        movieDetailObserver.value?.let { movieDisplayRequest ->
+            movieRepository.getMovieDetails(movieDisplayRequest)
         }
     }
 }
