@@ -2,6 +2,7 @@ package com.balajiss.movie.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import com.balajiss.movie.model.display.MovieDisplayRequest
 import com.balajiss.movie.util.MovieTestUtil.mockMovieList
 import com.balajiss.movie.util.RxImmediateSchedulerRule
 import com.balajiss.movie.util.getOrAwaitValue
@@ -9,6 +10,8 @@ import com.balajiss.movie.model.search.MovieSearchRequest
 import com.balajiss.movie.model.search.MovieSearchResponse
 import com.balajiss.movie.network.NetworkResponse
 import com.balajiss.movie.repo.MovieRepository
+import com.balajiss.movie.util.Event
+import com.balajiss.movie.util.MovieTestUtil.mockMovieDetail
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -47,12 +50,14 @@ class MovieViewModelTest {
             movieRepository.getMovieList(movieSearchRequest)
         ).thenReturn(
             MutableLiveData(
-                NetworkResponse.Success(
-                    MovieSearchResponse(
-                        "True",
-                        "",
-                        "10",
-                        mockMovieList
+                Event<NetworkResponse<MovieSearchResponse>>(
+                    NetworkResponse.Success(
+                        MovieSearchResponse(
+                            "True",
+                            "",
+                            "10",
+                            mockMovieList
+                        )
                     )
                 )
             )
@@ -60,7 +65,47 @@ class MovieViewModelTest {
 
         movieViewModel.movieSearchRequestObservable.value = movieSearchRequest
 
-        val result = movieViewModel.movieListObservable.getOrAwaitValue()
+        val result = movieViewModel.movieListObservable.getOrAwaitValue().getContentIfNotHandled()
+
+        result?.let { data ->
+            Assert.assertEquals(
+                NetworkResponse.STATUS.SUCCESS,
+                data.status
+            )
+            Assert.assertEquals(
+                "True",
+                data.data?.Response
+            )
+            Assert.assertEquals(
+                "10",
+                data.data?.totalResults
+            )
+            Assert.assertEquals(
+                mockMovieList,
+                data.data?.searchResult
+            )
+        }
+    }
+
+    @Test
+    fun getMovieDetail() {
+        val mockDisplayData = mockMovieDetail()
+
+        val movieDisplayRequest = MovieDisplayRequest("tt4154664")
+
+        Mockito.`when`(
+            movieRepository.getMovieDetails(movieDisplayRequest)
+        ).thenReturn(
+            MutableLiveData(
+                NetworkResponse.Success(
+                    mockDisplayData
+                )
+            )
+        )
+
+        movieViewModel.movieDetailObserver.value = movieDisplayRequest
+
+        val result = movieViewModel.movieDetailObservable.getOrAwaitValue()
 
         Assert.assertEquals(
             NetworkResponse.STATUS.SUCCESS,
@@ -71,12 +116,8 @@ class MovieViewModelTest {
             result.data?.Response
         )
         Assert.assertEquals(
-            "10",
-            result.data?.totalResults
-        )
-        Assert.assertEquals(
-            mockMovieList,
-            result.data?.searchResult
+            mockDisplayData,
+            result.data
         )
     }
 

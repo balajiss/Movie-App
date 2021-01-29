@@ -9,6 +9,13 @@
 
     <style name="AppBarTheme" parent="AppTheme">
         <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="AppTheme">
+        <item name="searchIcon">@drawable/ic_menu_search</item>
+        <item name="searchHintIcon">@drawable/ic_menu_search</item>
+        <item name="closeIcon">@drawable/ic_close</item>
     </style>
 
 </resources>

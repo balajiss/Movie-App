@@ -8,6 +8,7 @@ import com.balajiss.movie.model.search.MovieSearchResponse
 import com.balajiss.movie.network.MovieRetrofit
 import com.balajiss.movie.network.MovieService
 import com.balajiss.movie.network.NetworkResponse
+import com.balajiss.movie.util.Event
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -15,19 +16,19 @@ import io.reactivex.schedulers.Schedulers
 
 open class MovieRepository constructor(private val movieService: MovieService = MovieRetrofit.getInstance().getService()) {
 
-    fun getMovieList(movieSearchRequest: MovieSearchRequest): MutableLiveData<NetworkResponse<MovieSearchResponse>> {
-        val movieListLiveData = MutableLiveData<NetworkResponse<MovieSearchResponse>>()
+    fun getMovieList(movieSearchRequest: MovieSearchRequest): MutableLiveData<Event<NetworkResponse<MovieSearchResponse>>> {
+        val movieListLiveData = MutableLiveData<Event<NetworkResponse<MovieSearchResponse>>>()
 
         movieService.getMovieList(movieSearchRequest.title, movieSearchRequest.page, movieSearchRequest.type)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<MovieSearchResponse> {
                 override fun onSubscribe(d: Disposable) {
-                    movieListLiveData.value = NetworkResponse.Loading()
+                    movieListLiveData.value = Event(NetworkResponse.Loading())
                 }
 
                 override fun onError(e: Throwable) {
-                    movieListLiveData.value = NetworkResponse.Error(e)
+                    movieListLiveData.value = Event(NetworkResponse.Error(e))
                 }
 
                 override fun onComplete() {
@@ -35,7 +36,7 @@ open class MovieRepository constructor(private val movieService: MovieService = 
                 }
 
                 override fun onNext(t: MovieSearchResponse) {
-                    movieListLiveData.value = NetworkResponse.Success(t)
+                    movieListLiveData.value = Event(NetworkResponse.Success(t))
                 }
             })
 

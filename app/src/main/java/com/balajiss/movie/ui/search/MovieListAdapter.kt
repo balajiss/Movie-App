@@ -3,22 +3,28 @@ package com.balajiss.movie.ui.search
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.animation.AnimationUtils
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.balajiss.movie.R
+import com.balajiss.movie.databinding.ItemMovieBinding
 import com.balajiss.movie.model.search.MovieItem
+import com.balajiss.movie.util.MoviePicasso
 import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 
-class MovieListAdapter(private val itemClickListener : MovieSelectListener) : RecyclerView.Adapter<MovieViewHolder>() {
+class MovieListAdapter(private val itemClickListener: MovieSelectListener) :
+    RecyclerView.Adapter<MovieViewHolder>() {
 
     var data = ArrayList<MovieItem>()
+
+    var lastPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
 
-        return MovieViewHolder(view, itemClickListener)
+        val itemBinding = DataBindingUtil.bind<ItemMovieBinding>(view)
+
+        return MovieViewHolder(itemBinding, itemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -26,33 +32,46 @@ class MovieListAdapter(private val itemClickListener : MovieSelectListener) : Re
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        setAnimation(holder.itemView, position)
+
         holder.onBind(data[position])
+    }
+
+    private fun setAnimation(view: View, position: Int) {
+        if (position > lastPosition) {
+            val pushUpAnimation =
+                AnimationUtils.loadAnimation(view.context, R.anim.item_animation_push_up)
+            view.startAnimation(pushUpAnimation)
+
+            lastPosition = position
+        }
     }
 }
 
 class MovieViewHolder(
-    itemView: View,
+    private val itemBinding: ItemMovieBinding?,
     private val itemClickListener: MovieSelectListener
-) : RecyclerView.ViewHolder(itemView) {
-
-    private val movieTitle = itemView.findViewById<TextView>(R.id.title)
-    private val movieImage = itemView.findViewById<ImageView>(R.id.movie_image)
+) : RecyclerView.ViewHolder(itemBinding?.root!!) {
 
     fun onBind(item: MovieItem) {
-        Picasso.get().load(item.poster).error(R.drawable.broken_image).into(movieImage, object : Callback {
-            override fun onSuccess() {
-                itemView.visibility = View.VISIBLE
-                movieTitle.text = item.title
-            }
+        itemBinding?.let {
+            MoviePicasso.getInstance(itemView.context).load(item.poster)
+                .error(R.drawable.broken_image)
+                .into(it.movieImage, object : Callback {
+                    override fun onSuccess() {
+                        itemView.visibility = View.VISIBLE
+                        it.title.text = item.title
+                    }
 
-            override fun onError(e: Exception?) {
-                itemView.visibility = View.VISIBLE
-                movieTitle.text = item.title
-            }
-        })
+                    override fun onError(e: Exception?) {
+                        itemView.visibility = View.VISIBLE
+                        it.title.text = item.title
+                    }
+                })
 
-        itemView.setOnClickListener {
-            itemClickListener.onClick(item)
+            itemView.setOnClickListener {
+                itemClickListener.onClick(item)
+            }
         }
     }
 }

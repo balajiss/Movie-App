@@ -9,6 +9,9 @@ class Constants {
 
         const val PAGE_ITEMS_COUNT = 10
 
-        const val CONFIGURATION_CHANGE = "config_change"
+        const val PORTRAIT_ROW_ITEM_NOS = 2
+        const val LANDSCAPE_ROW_ITEM_NOS = 4
+        const val PORTRAIT_ROW_BUFFER_ITEM_NOS = 2
+        const val LANDSCAPE_ROW_BUFFER_ITEM_NOS = 4
     }
 }

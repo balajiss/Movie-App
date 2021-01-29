@@ -1,9 +1,14 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 29
+
+    buildFeatures {
+        dataBinding true
+    }
 
     defaultConfig {
         applicationId "com.balajiss.movie"
@@ -37,6 +42,7 @@ def coordinatorVersion = "1.1.0"
 def materialVersion = "1.0.0"
 def mockitoVersion = "2.13.0"
 def archVersion = "2.1.0"
+def navVersion = "2.3.3"
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -92,4 +98,8 @@ dependencies {
     // Mckito
     implementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 }

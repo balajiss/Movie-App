@@ -1,8 +1,6 @@
 package com.balajiss.movie.network
 
-import android.content.Context
 import com.balajiss.movie.MovieApplication
-import com.balajiss.movie.network.MovieRetrofit.Companion.INSTANCE
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient

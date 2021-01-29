@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.balajiss.movie.ui.detail.DetailFragment">
+
+    <data>
+
+        <variable
+            name="movieDetailModel"
+            type="com.balajiss.movie.model.display.MovieDisplayResponse" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <include
+                android:id="@+id/layout_content"
+                layout="@layout/fragment_detail_content" />
+
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar_detail" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

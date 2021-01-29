@@ -60,19 +60,22 @@ class MovieRepositoryTest {
         )
 
         val result = movieRepository.getMovieList(movieSearchRequest).getOrAwaitValue()
+            .getContentIfNotHandled()
 
-        Assert.assertEquals(
-            "True",
-            result.data?.Response
-        )
-        Assert.assertEquals(
-            "10",
-            result.data?.totalResults
-        )
-        Assert.assertEquals(
-            mockMovieList,
-            result.data?.searchResult
-        )
+        result?.let {data->
+            Assert.assertEquals(
+                "True",
+                data.data?.Response
+            )
+            Assert.assertEquals(
+                "10",
+                data.data?.totalResults
+            )
+            Assert.assertEquals(
+                mockMovieList,
+                data.data?.searchResult
+            )
+        }
     }
 
     @Test

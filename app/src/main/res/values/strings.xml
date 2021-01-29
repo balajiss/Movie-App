@@ -4,6 +4,7 @@
     <string name="no_view">No View</string>
     <string name="search">Search</string>
     <string name="no_internet">No Internet.</string>
+    <string name="no_movie_selected">No Movie Selected</string>
     <string name="loading_cache">Loading from Cache</string>
     <string name="timeout">Connection timeout</string>
     <string name="category">Category</string>

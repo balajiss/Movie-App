@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment(): Fragment() {
@@ -12,7 +11,7 @@ abstract class BaseFragment(): Fragment() {
     abstract fun layoutRes(): Int
 
     abstract fun observe()
-    abstract fun removeObserve()
+    abstract fun removeObservers()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +30,6 @@ abstract class BaseFragment(): Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
-        removeObserve()
+        removeObservers()
     }
 }

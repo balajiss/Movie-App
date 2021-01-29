@@ -1,7 +1,5 @@
 package com.balajiss.movie.network
 
-import android.content.Context
-import com.balajiss.movie.R
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.net.HttpURLConnection

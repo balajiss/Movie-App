@@ -1,27 +1,31 @@
 package com.balajiss.movie.ui.search
 
-import android.content.Intent
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.*
 import android.widget.AbsListView
-import android.widget.ProgressBar
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.balajiss.movie.R
+import com.balajiss.movie.databinding.FragmentSearchBinding
 import com.balajiss.movie.model.search.MovieItem
 import com.balajiss.movie.model.search.MovieSearchRequest
+import com.balajiss.movie.model.search.MovieSearchResponse
 import com.balajiss.movie.network.NetworkExceptions
 import com.balajiss.movie.network.NetworkResponse
-import com.balajiss.movie.ui.BaseActivity
 import com.balajiss.movie.ui.BaseFragment
-import com.balajiss.movie.ui.detail.DetailActivity
+import com.balajiss.movie.ui.movie.MovieActivity
 import com.balajiss.movie.util.Constants
 import com.balajiss.movie.viewmodel.MovieViewModel
 import com.balajiss.movie.viewmodel.MovieViewModelFactory
+import kotlinx.android.synthetic.main.fragment_search.view.*
 
 
 class SearchFragment : BaseFragment(), MovieSelectListener {
@@ -30,12 +34,17 @@ class SearchFragment : BaseFragment(), MovieSelectListener {
 
     lateinit var movieViewModel: MovieViewModel
 
-    lateinit var progressBar: ProgressBar
-    lateinit var recyclerView: RecyclerView
+    lateinit var parent: MovieActivity
 
-    var configChange = false
+    private lateinit var dataBinding: FragmentSearchBinding
 
     private lateinit var adapter: MovieListAdapter
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        parent = context as MovieActivity
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,14 +53,23 @@ class SearchFragment : BaseFragment(), MovieSelectListener {
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        retainInstance = true
-
         setHasOptionsMenu(true)
 
-        view?.let { view ->
-            progressBar = view.findViewById(R.id.loading_movies)
-            recyclerView = view.findViewById(R.id.movie_list)
+        view?.let {
+            DataBindingUtil.bind<FragmentSearchBinding>(it)?.let { bind ->
+                dataBinding = bind
+            }
         }
+
+        view?.let { initView() }
+
+        return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        retainInstance = true
 
         activity?.let {
             movieViewModel = ViewModelProvider(
@@ -62,85 +80,83 @@ class SearchFragment : BaseFragment(), MovieSelectListener {
             )
         }
 
-        view?.let { initView() }
-
-        return view
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putBoolean(Constants.CONFIGURATION_CHANGE, true)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        savedInstanceState?.let {
-            configChange = it.getBoolean(Constants.CONFIGURATION_CHANGE)
-        }
-
-        if (!configChange)
-            fetchData()
+        fetchData()
     }
 
     override fun observe() {
-        movieViewModel.movieListObservable.observe(this,
-            Observer {
-                when (it.status) {
-                    NetworkResponse.STATUS.LOADING -> {
-                        progressBar.visibility = View.VISIBLE
-                    }
-                    NetworkResponse.STATUS.SUCCESS -> {
-                        progressBar.visibility = View.GONE
-                        try {
-                            it.data?.let { data ->
-                                if (data.Response == "True") {
-                                    movieViewModel.totalItems = Integer.parseInt(data.totalResults)
-                                    populateList(data.searchResult)
-                                } else {
-                                    (activity as BaseActivity).showToast(data.Error)
+        movieViewModel.movieListObservable.observe(viewLifecycleOwner,
+            Observer { event ->
+                event.getContentIfNotHandled().let { data ->
+                    data?.let { notHandledData ->
+                        when (notHandledData.status) {
+                            NetworkResponse.STATUS.LOADING -> {
+                                dataBinding.layoutContent.loading_movies.visibility = View.VISIBLE
+                            }
+                            NetworkResponse.STATUS.SUCCESS -> {
+                                dataBinding.layoutContent.loading_movies.visibility = View.GONE
+                                notHandledData.data?.let { handleData(it) }
+                            }
+                            NetworkResponse.STATUS.ERROR -> {
+                                dataBinding.layoutContent.loading_movies.visibility = View.GONE
+                                notHandledData.throwable?.let { throwable ->
+                                    if (throwable is NetworkExceptions.NoInternetException)
+                                        parent.showToast(getString(R.string.no_internet))
                                 }
                             }
-                        } catch (e: NumberFormatException) {
-
-                        }
-                    }
-                    NetworkResponse.STATUS.ERROR -> {
-                        progressBar.visibility = View.GONE
-                        it.throwable?.let { throwable ->
-                            if (throwable is NetworkExceptions.NoInternetException)
-                                (activity as BaseActivity).showToast(getString(R.string.no_internet))
                         }
                     }
                 }
             })
     }
 
-    private fun populateList(searchResult: List<MovieItem>) {
-        if (configChange) {
-            (searchResult as ArrayList).clear()
-            searchResult.addAll(movieViewModel.searchData)
-            configChange = false
-        } else {
-            movieViewModel.searchData.addAll(searchResult)
+    private fun handleData(data: MovieSearchResponse) {
+        try {
+            if (data.Response == "True") {
+                movieViewModel.totalItems =
+                    Integer.parseInt(data.totalResults)
+                populateList(data.searchResult)
+            } else {
+                parent.showToast(data.Error)
+            }
+        } catch (e: NumberFormatException) {
+
         }
+    }
+
+    private fun populateList(searchResult: List<MovieItem>) {
+        movieViewModel.searchData.addAll(searchResult)
+
         adapter.data.addAll(searchResult)
         adapter.notifyDataSetChanged()
     }
 
-    override fun removeObserve() {
-        movieViewModel.movieListObservable.removeObservers(this)
+    private fun populateExistingData(searchResult: List<MovieItem>) {
+        adapter.data.addAll(searchResult)
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun removeObservers() {
+        movieViewModel.movieListObservable.removeObservers(viewLifecycleOwner)
     }
 
     private fun initView() {
+        parent.setSupportActionBar(dataBinding.layoutToolbar.toolbar)
+
+        parent.title = getString(R.string.app_name)
+
         initMovieListView()
     }
 
     private fun spanCount() = when (resources.configuration.orientation) {
-        Configuration.ORIENTATION_PORTRAIT -> 2
-        Configuration.ORIENTATION_LANDSCAPE -> 4
-        else -> 2
+        Configuration.ORIENTATION_PORTRAIT -> Constants.PORTRAIT_ROW_ITEM_NOS
+        Configuration.ORIENTATION_LANDSCAPE -> Constants.LANDSCAPE_ROW_ITEM_NOS
+        else -> Constants.PORTRAIT_ROW_ITEM_NOS
+    }
+
+    private fun bufferCount() = when (resources.configuration.orientation) {
+        Configuration.ORIENTATION_PORTRAIT -> Constants.PORTRAIT_ROW_BUFFER_ITEM_NOS
+        Configuration.ORIENTATION_LANDSCAPE -> Constants.LANDSCAPE_ROW_BUFFER_ITEM_NOS
+        else -> Constants.PORTRAIT_ROW_BUFFER_ITEM_NOS
     }
 
     private fun initMovieListView() {
@@ -148,10 +164,12 @@ class SearchFragment : BaseFragment(), MovieSelectListener {
 
         val layoutManager = GridLayoutManager(context, spanCount())
 
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = adapter
+        dataBinding.layoutContent.movie_list.layoutManager = layoutManager
+        dataBinding.layoutContent.movie_list.adapter = adapter
 
-        recyclerView.itemAnimator = DefaultItemAnimator()
+        populateExistingData(movieViewModel.searchData)
+
+        dataBinding.layoutContent.movie_list.itemAnimator = DefaultItemAnimator()
 
         var scrolling = false
 
@@ -159,13 +177,9 @@ class SearchFragment : BaseFragment(), MovieSelectListener {
         var visibleItemCount = 0
         var totalItemCount = 0
         var previousItemCount = 0
-        var buffer = when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> 2
-            Configuration.ORIENTATION_LANDSCAPE -> 4
-            else -> 2
-        }
 
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        dataBinding.layoutContent.movie_list.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -185,7 +199,7 @@ class SearchFragment : BaseFragment(), MovieSelectListener {
                         (it as GridLayoutManager).findFirstVisibleItemPosition()
                 }
 
-                if (scrolling && (visibleItemCount + scrolledItems) == (totalItemCount - buffer) && (visibleItemCount + scrolledItems) != (previousItemCount - buffer)) {
+                if (scrolling && (visibleItemCount + scrolledItems) >= (totalItemCount - bufferCount()) && (visibleItemCount + scrolledItems) != (previousItemCount - bufferCount())) {
                     previousItemCount = totalItemCount
                     scrolling = false
 
@@ -197,6 +211,11 @@ class SearchFragment : BaseFragment(), MovieSelectListener {
     }
 
     fun fetchData(page: Int = 1) {
+        if (page == 1) {
+            movieViewModel.searchData.clear()
+            if (::adapter.isInitialized)
+                adapter.lastPosition = 0
+        }
         movieViewModel.movieSearchRequestObservable.value =
             MovieSearchRequest(title = movieViewModel.title, page = page)
     }
@@ -209,14 +228,37 @@ class SearchFragment : BaseFragment(), MovieSelectListener {
     }
 
     override fun onClick(item: MovieItem) {
-        val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra(Constants.TYPE, item)
-        startActivity(intent)
+        movieViewModel.selectedMovie = item
+        parent.openDetailFragment(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        val searchViewItem = menu.findItem(R.id.app_bar_search)
-        searchViewItem.isVisible = true
+        inflater.inflate(R.menu.movie_menu, menu)
+        menu?.let { it ->
+            val searchViewItem = it.findItem(R.id.app_bar_search)
+            val searchView = MenuItemCompat.getActionView(searchViewItem) as SearchView
+            searchView.maxWidth = Int.MAX_VALUE
+            searchView.queryHint = movieViewModel.title
+
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    searchView.clearFocus()
+
+                    query?.let { queryString ->
+                        if (queryString.isNotEmpty()) {
+                            movieViewModel.title = queryString
+                            clearData()
+                            fetchData()
+                        }
+                    }
+
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?) = false
+
+            })
+        }
 
         super.onCreateOptionsMenu(menu, inflater)
     }
