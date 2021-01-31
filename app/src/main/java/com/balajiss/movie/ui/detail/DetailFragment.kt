@@ -103,14 +103,14 @@ class DetailFragment : BaseFragment() {
             when (it.status) {
                 NetworkResponse.STATUS.LOADING -> {
                     dataBinding.layoutContent.loading_details.visibility = View.VISIBLE
-                    dataBinding.layoutContent.data_layout.visibility = View.GONE
+                    dataBinding.layoutContent.group_divider.visibility = View.GONE
                 }
                 NetworkResponse.STATUS.SUCCESS -> {
                     dataBinding.layoutContent.loading_details.visibility = View.GONE
                     try {
                         it.data?.let { data ->
                             if (data.Response == "True") {
-                                dataBinding.layoutContent.data_layout.visibility = View.VISIBLE
+                                dataBinding.layoutContent.group_divider.visibility = View.VISIBLE
                                 populateView(data)
                             } else {
                                 parent.showToast(data.Error)
@@ -122,7 +122,7 @@ class DetailFragment : BaseFragment() {
                 }
                 NetworkResponse.STATUS.ERROR -> {
                     dataBinding.layoutContent.loading_details.visibility = View.GONE
-                    dataBinding.layoutContent.data_layout.visibility = View.GONE
+                    dataBinding.layoutContent.group_divider.visibility = View.GONE
                     it.throwable?.let { throwable ->
                         if (throwable is NetworkExceptions.NoInternetException)
                             parent.showToast(getString(R.string.no_internet))

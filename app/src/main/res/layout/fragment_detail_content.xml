@@ -1,344 +1,348 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/data_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/data_layout"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_66"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_8sdp"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingRight="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="@string/writer"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_33"
+        app:layout_constraintTop_toBottomOf="@id/director" />
+
+    <TextView
+        android:id="@+id/label_score"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center"
+        android:padding="@dimen/_4sdp"
+        android:text="@string/score"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_33"
+        app:layout_constraintTop_toBottomOf="@id/separate_score" />
+
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_4sdp"
+        android:paddingRight="@dimen/_4sdp"
+        tools:text="Category"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_33"
+        app:layout_constraintTop_toBottomOf="@id/label_category" />
+
+    <View
+        android:id="@+id/separate_synopsis"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_33"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.33" />
+    <TextView
+        android:id="@+id/actor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_4sdp"
+        app:layout_constraintVertical_bias="0"
+        tools:text="Writer"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/guideline_33"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/writer" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_66"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.66" />
+    <TextView
+        android:id="@+id/label_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/_4sdp"
+        android:text="@string/category"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_33"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/label_category"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/_4sdp"
-            android:text="@string/category"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/guideline_33"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_4sdp"
+        android:paddingRight="@dimen/_4sdp"
+        tools:text="Score"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_33"
+        app:layout_constraintTop_toBottomOf="@id/label_score" />
 
-        <TextView
-            android:id="@+id/label_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/_4sdp"
-            android:text="@string/duration"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold|italic"
-            app:layout_constraintLeft_toRightOf="@id/guideline_33"
-            app:layout_constraintRight_toLeftOf="@id/guideline_66"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/box_office"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_4sdp"
+        android:paddingRight="@dimen/_4sdp"
+        tools:text="Box Office"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_66"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_score" />
 
-        <TextView
-            android:id="@+id/label_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/_4sdp"
-            android:text="@string/rating"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/guideline_66"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/synopsis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:paddingLeft="@dimen/_8sdp"
+        android:paddingRight="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        tools:text="Synopsis"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_synopsis" />
 
-        <TextView
-            android:id="@+id/category"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/_4sdp"
-            android:paddingRight="@dimen/_4sdp"
-            android:text="Category"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/guideline_33"
-            app:layout_constraintTop_toBottomOf="@id/label_category" />
+    <TextView
+        android:id="@+id/director"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_4sdp"
+        tools:text="Director"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_33"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separate" />
 
-        <TextView
-            android:id="@+id/duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/_4sdp"
-            android:paddingRight="@dimen/_4sdp"
-            android:text="Duration"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintLeft_toRightOf="@id/guideline_33"
-            app:layout_constraintRight_toLeftOf="@id/guideline_66"
-            app:layout_constraintTop_toBottomOf="@id/label_duration" />
+    <TextView
+        android:id="@+id/language"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_4sdp"
+        android:paddingRight="@dimen/_4sdp"
+        tools:text="Language"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_33"
+        app:layout_constraintRight_toLeftOf="@id/guideline_66"
+        app:layout_constraintTop_toBottomOf="@id/label_score" />
 
-        <TextView
-            android:id="@+id/rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/_4sdp"
-            android:paddingRight="@dimen/_4sdp"
-            android:text="Rating"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintLeft_toRightOf="@id/guideline_66"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_rating" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_8sdp"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingRight="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="@string/director"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_33"
+        app:layout_constraintTop_toBottomOf="@id/separate" />
 
-        <View
-            android:id="@+id/separate_synopsis"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/category" />
+    <TextView
+        android:id="@+id/label_language"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center"
+        android:padding="@dimen/_4sdp"
+        android:text="@string/language"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/guideline_33"
+        app:layout_constraintRight_toLeftOf="@id/guideline_66"
+        app:layout_constraintTop_toBottomOf="@id/separate_score" />
 
-        <TextView
-            android:id="@+id/label_synopsis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:paddingLeft="@dimen/_8sdp"
-            android:paddingTop="@dimen/_4sdp"
-            android:paddingRight="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_4sdp"
-            android:text="@string/synopsis"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separate_synopsis" />
+    <TextView
+        android:id="@+id/writer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_4sdp"
+        tools:text="Writer"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_33"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/director" />
 
-        <TextView
-            android:id="@+id/synopsis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:paddingLeft="@dimen/_8sdp"
-            android:paddingRight="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_4sdp"
-            android:text="Synopsis"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_synopsis" />
+    <View
+        android:id="@+id/separate_score"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/synopsis" />
 
-        <View
-            android:id="@+id/separate_score"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/synopsis" />
+    <TextView
+        android:id="@+id/label_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/_4sdp"
+        android:text="@string/rating"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/guideline_66"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/label_score"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:gravity="center"
-            android:padding="@dimen/_4sdp"
-            android:text="@string/score"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/guideline_33"
-            app:layout_constraintTop_toBottomOf="@id/separate_score" />
+    <TextView
+        android:id="@+id/label_box_office"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center"
+        android:padding="@dimen/_4sdp"
+        android:text="@string/box_office"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/guideline_66"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separate_score" />
 
-        <TextView
-            android:id="@+id/score"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/_4sdp"
-            android:paddingRight="@dimen/_4sdp"
-            android:text="Score"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/guideline_33"
-            app:layout_constraintTop_toBottomOf="@id/label_score" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33" />
 
-        <TextView
-            android:id="@+id/label_language"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:gravity="center"
-            android:padding="@dimen/_4sdp"
-            android:text="@string/language"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/guideline_33"
-            app:layout_constraintRight_toLeftOf="@id/guideline_66"
-            app:layout_constraintTop_toBottomOf="@id/separate_score" />
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_4sdp"
+        android:paddingRight="@dimen/_4sdp"
+        tools:text="Duration"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_33"
+        app:layout_constraintRight_toLeftOf="@id/guideline_66"
+        app:layout_constraintTop_toBottomOf="@id/label_duration" />
 
-        <TextView
-            android:id="@+id/language"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/_4sdp"
-            android:paddingRight="@dimen/_4sdp"
-            android:text="Language"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintLeft_toRightOf="@id/guideline_33"
-            app:layout_constraintRight_toLeftOf="@id/guideline_66"
-            app:layout_constraintTop_toBottomOf="@id/label_score" />
+    <TextView
+        android:id="@+id/label_synopsis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:paddingLeft="@dimen/_8sdp"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingRight="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="@string/synopsis"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separate_synopsis" />
 
-        <TextView
-            android:id="@+id/label_box_office"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:gravity="center"
-            android:padding="@dimen/_4sdp"
-            android:text="@string/box_office"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/guideline_66"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separate_score" />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_8sdp"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingRight="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        app:layout_constraintVertical_bias="0"
+        android:text="@string/actor"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_33"
+        app:layout_constraintTop_toBottomOf="@id/writer" />
 
-        <TextView
-            android:id="@+id/box_office"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/_4sdp"
-            android:paddingRight="@dimen/_4sdp"
-            android:text="Box Office"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintLeft_toRightOf="@id/guideline_66"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_score" />
+    <View
+        android:id="@+id/separate"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/language" />
 
-        <View
-            android:id="@+id/separate"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/language" />
+    <TextView
+        android:id="@+id/label_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/_4sdp"
+        android:text="@string/duration"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold|italic"
+        app:layout_constraintLeft_toRightOf="@id/guideline_33"
+        app:layout_constraintRight_toLeftOf="@id/guideline_66"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_8sdp"
-            android:paddingTop="@dimen/_4sdp"
-            android:paddingRight="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_4sdp"
-            android:text="@string/director"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/guideline_33"
-            app:layout_constraintTop_toBottomOf="@id/separate" />
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_4sdp"
+        android:paddingRight="@dimen/_4sdp"
+        tools:text="Rating"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_66"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_rating" />
 
-        <TextView
-            android:id="@+id/director"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:padding="@dimen/_4sdp"
-            android:text="Director"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintLeft_toRightOf="@id/guideline_33"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separate" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_8sdp"
-            android:paddingTop="@dimen/_4sdp"
-            android:paddingRight="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_4sdp"
-            android:text="@string/writer"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/guideline_33"
-            app:layout_constraintTop_toBottomOf="@id/director" />
-
-        <TextView
-            android:id="@+id/writer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:padding="@dimen/_4sdp"
-            android:text="Writer"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintLeft_toRightOf="@id/guideline_33"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/director" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_8sdp"
-            android:paddingTop="@dimen/_4sdp"
-            android:paddingRight="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_4sdp"
-            android:text="@string/actor"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/guideline_33"
-            app:layout_constraintTop_toBottomOf="@id/writer" />
-
-        <TextView
-            android:id="@+id/actor"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:padding="@dimen/_4sdp"
-            android:text="Writer"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/guideline_33"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/writer" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids=" label_box_office, label_duration, label_language, label_rating, label_score, label_synopsis,guideline_66,textView,label_score,category,separate_synopsis,actor,label_category,score,rating,box_office,synopsis,director,language,textView2,label_language,writer,separate_score,label_rating,label_box_office,guideline_33,duration,label_synopsis,textView3,separate,label_duration" />
 
     <ProgressBar
         android:id="@+id/loading_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_16sdp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
